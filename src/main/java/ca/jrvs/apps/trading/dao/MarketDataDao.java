@@ -14,6 +14,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,8 +52,13 @@ public class MarketDataDao {
     }
 
     public IexQuote findIexQupteByTicker(String ticker){
-        return null;
+        List<IexQuote> quotes = findIexQuoteByTicker(Arrays.asList(ticker));
+        if (quotes == null || quotes.size() != 1) {
+            throw new DataRetrievalFailureException("Unable to get data");
+        }
+        return quotes.get(0);
     }
+
 
     protected String getURI(List<String> tickers){
         String symbols = Joiner.on(",").join(tickers);
@@ -60,10 +66,6 @@ public class MarketDataDao {
         return API_BASE_URI + resultUri + TOKEN;
     }
 
-    protected String getURI(String ticker){
-        String resultUri = String.format(BATCH_QUOTE_PATH,ticker);
-        return API_BASE_URI + resultUri + TOKEN;
-    }
 
     protected String executeHttpGet(String url) {
         try (CloseableHttpClient httpClient = getHttpClient()) {
@@ -90,4 +92,5 @@ public class MarketDataDao {
     protected CloseableHttpClient getHttpClient(){
         return HttpClients.custom().setConnectionManager(clientConnectionManager).setConnectionManagerShared(true).build();
     }
+
 }

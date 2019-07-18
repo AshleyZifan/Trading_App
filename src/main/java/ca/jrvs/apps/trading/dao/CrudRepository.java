@@ -1,4 +1,10 @@
 package ca.jrvs.apps.trading.dao;
 
-public class CrudRepository {
+public interface CrudRepository<E, ID> {
+
+    E save(E entity);
+    E findById(ID id);
+    boolean existsById(ID id);
+    void deleteById(ID id);
+
 }
