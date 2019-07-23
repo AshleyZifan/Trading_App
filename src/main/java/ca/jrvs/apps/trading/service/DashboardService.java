@@ -48,9 +48,8 @@ public class DashboardService {
    * @throws IllegalArgumentException for invalid input
    */
   public TraderAccountView getTraderAccount(Integer traderId) {
-    Trader trader = traderDao.findById(traderId);
     TraderAccountView traderAccountView = new TraderAccountView();
-    traderAccountView.setTrader(trader);
+    traderAccountView.setTrader(traderDao.findById(traderId));
     traderAccountView.setAccount(accountDao.findByTraderId(traderId));
     return traderAccountView;
   }

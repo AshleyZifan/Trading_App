@@ -82,6 +82,14 @@ public class AccountDao implements CrudRepository<Account, Integer> {
         jdbcTemplate.update("delete from " + TABLE_NAME + " where " + ID_COLUMN +" = ?", id);
     }
 
+
+    public void deleteByTraderId(Integer traderId) {
+        if(traderId == null) {
+            throw new IllegalArgumentException("trader ID can't be null");
+        }
+        jdbcTemplate.update("delete from " + TABLE_NAME + " where trader_id=?", traderId);
+    }
+
     public void updateAmount(Account account){
         String updateSql = "UPDATE quote SET amount=" + account.getAmount() + "WHERE id=" + account.getId();
         if(!existsById(account.getId())){

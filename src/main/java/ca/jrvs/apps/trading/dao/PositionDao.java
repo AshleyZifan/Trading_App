@@ -32,4 +32,18 @@ public class PositionDao {
         return positions;
     }
 
+    public Position findBy_AccountId_Ticker(Integer accountId, String ticker){
+        if (accountId == null) {
+            throw new IllegalArgumentException("Account ID can't be null");
+        }
+        Position position = null;
+        try {
+            position = jdbcTemplate.queryForObject("select * from " + TABLE_NAME + " where account_id= ?, ticker=?",
+                    BeanPropertyRowMapper.newInstance(Position.class), accountId, ticker);
+        } catch (EmptyResultDataAccessException e) {
+            logger.debug("Can't find account id:" + accountId, e);
+        }
+        return position;
+    }
+
 }

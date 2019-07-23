@@ -31,7 +31,10 @@ public class FundTransferService {
    * @throws IllegalArgumentException for invalid input
    */
   public Account deposit(Integer traderId, Double fund) {
-    Account account = accountDao.findById(traderId);
+    if(fund <= 0){
+      throw new RuntimeException("deposit fund should be greater than 0");
+    }
+    Account account = accountDao.findByTraderId(traderId);
     account.setAmount(account.getAmount() + fund);
     accountDao.updateAmount(account);
     return account;
@@ -52,8 +55,11 @@ public class FundTransferService {
    * @throws IllegalArgumentException for invalid input
    */
   public Account withdraw(Integer traderId, Double fund) {
+    if(fund <= 0){
+      throw new RuntimeException("withdraw fund should be greater than 0");
+    }
     Account account = accountDao.findById(traderId);
-    account.setAmount(account.getAmount() + fund);
+    account.setAmount(account.getAmount() - fund);
     accountDao.updateAmount(account);
     return account;
     }

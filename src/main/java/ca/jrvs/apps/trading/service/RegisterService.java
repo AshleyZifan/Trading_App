@@ -42,10 +42,16 @@ public class RegisterService {
    * @throws IllegalArgumentException for invalid input
    */
   public TraderAccountView createTraderAndAccount(Trader trader) {
+    //create a trader
+    Trader trader_new = traderDao.save(trader);
+    //create an account
     Account account = new Account();
+    account.setTraderId(trader_new.getId());
+    account.setAmount(0);
     accountDao.save(account);
+    //create, setup, and return a new traderAccountView
     TraderAccountView view = new TraderAccountView();
-    view.setTrader(trader);
+    view.setTrader(trader_new);
     view.setAccount(account);
     return view;
   }
@@ -63,6 +69,20 @@ public class RegisterService {
    * @throws IllegalArgumentException for invalid input
    */
   public void deleteTraderById(Integer traderId) {
+    //validate
+    Account account = accountDao.findByTraderId(traderId);
+    if(account.getAmount()!= 0){
+      throw new RuntimeException("The trader has cash balance");
+    }else if(!positionDao.findByAccountId(account.getId()).isEmpty()){
+      throw new RuntimeException("Has open position");
+    }else{
+      //- delete all securityOrders
+      securityOrderDao.deleteByAccountId(account.getId());
+      // delete all account
+      accountDao.deleteByTraderId(traderId);
+      // delete all trader
+      traderDao.deleteById(traderId);
+  }
   }
 
 }

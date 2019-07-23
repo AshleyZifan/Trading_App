@@ -8,18 +8,21 @@ import ca.jrvs.apps.trading.service.QuoteService;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.junit.Test;
 
+import javax.sql.DataSource;
+
 import static org.junit.Assert.*;
 
 public class QuoteControllerTest {
 
+    private QuoteDao quoteDao;
+    private QuoteService quoteService;
+
     @Test
     public void getQuoteTest() {
-        QuoteService service = new QuoteService();
-        QuoteDao quoteDao = new QuoteDao();
         AppConfig config = new AppConfig();
         HttpClientConnectionManager connectionManager = config.httpClientConnectionManager();
         MarketDataDao marketDataDao = new MarketDataDao(connectionManager);
-        QuoteController controller = new QuoteController(service, quoteDao, marketDataDao);
+        QuoteController controller = new QuoteController(quoteService, quoteDao, marketDataDao);
         IexQuote quote = controller.getQuote("AAPL");
         assertNotNull(quote);
         System.out.println(quote.toString());

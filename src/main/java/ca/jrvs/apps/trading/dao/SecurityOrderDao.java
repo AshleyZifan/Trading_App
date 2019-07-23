@@ -66,4 +66,11 @@ public class SecurityOrderDao implements CrudRepository<SecurityOrder, Integer> 
         }
         jdbcTemplate.update("delete from " + TABLE_NAME + " where " + ID_COLUMN +" = ?", id);
     }
+
+    public void deleteByAccountId(Integer accountId) {
+        if(accountId == null) {
+            throw new IllegalArgumentException("account ID can't be null");
+        }
+        jdbcTemplate.update("delete from " + TABLE_NAME + " where account_id= ?", accountId);
+    }
 }

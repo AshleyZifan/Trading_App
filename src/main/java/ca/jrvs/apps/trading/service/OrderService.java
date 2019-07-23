@@ -52,13 +52,36 @@ public class OrderService {
    * @throws IllegalArgumentException for invalid input
    */
   public SecurityOrder executeMarketOrder(MarketOrderDto orderDto) {
+
+    int size = orderDto.getSize();
+    String ticker = orderDto.getTicker();
+    Quote quote = quoteDao.findById(ticker);
+    double price = quote.getBidPrice();
+    Account account = accountDao.findById(orderDto.getAccountId());
+    Double balance = account.getAmount();
+    Position position = positionDao.findBy_AccountId_Ticker(account.getId(),ticker);
     //- buy order : check account balance
-    Double balance = accountDao.findById(orderDto.getAccountId()).getAmount();
-    //- sell order: check position for the ticker/symbol
-
+    if(size> 0){
+      if (balance < price*size){
+        throw new RuntimeException("balance not enough");
+      }
+    } else {
+      //- sell order: check position for the ticker/symbol
+      if(position.getPosition() < size){
+        throw new RuntimeException("position not enough");
+      }
+    }
+    account.setAmount(balance - price*size);
+    accountDao.updateAmount(account);
+    position.setPosition(position.getPosition() + size);
+    //add position
     SecurityOrder securityOrder = new SecurityOrder();
-
+    securityOrder.setAccountId(account.getId());
+    securityOrder.setPrice(price);
+    securityOrder.setSize(size);
+    securityOrder.setTicker(ticker);
     return securityOrder;
+
   }
 
 }
