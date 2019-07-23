@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class ResponseExceptionUtil {
     private  static final Logger logger = LoggerFactory.getLogger(ResponseExceptionUtil.class);
 
-    public static ResponseStatusException getResponseStatusExcception(Exception ex){
+    public static ResponseStatusException getResponseStatusException(Exception ex){
         if(ex instanceof IllegalArgumentException){
             logger.debug("Invalid put", ex);
             return new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());

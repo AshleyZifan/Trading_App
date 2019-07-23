@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class QuoteDao  implements CrudRepository<Quote, String> {
@@ -66,5 +67,23 @@ public class QuoteDao  implements CrudRepository<Quote, String> {
             throw new IllegalArgumentException("ID can't be null");
         }
         jdbcTemplate.update("delete from " + TABLE_NAME + " where " + ID_NAME +" = ?", id);
+    }
+
+    public List<Quote> getAllQuotes(){
+        List<Quote> quotes = null;
+        try {
+            quotes = jdbcTemplate.query("select * from " + TABLE_NAME, BeanPropertyRowMapper.newInstance(Quote.class));
+        } catch (EmptyResultDataAccessException e) {
+            logger.debug("Can't find quotes", e);
+        }
+        return quotes;
+    }
+
+    public void update(List<Quote> quotes){
+
+    }
+
+    public void update(Quote quote){
+
     }
 }

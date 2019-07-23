@@ -51,7 +51,7 @@ public class MarketDataDao {
        return iexQuotes;
     }
 
-    public IexQuote findIexQupteByTicker(String ticker){
+    public IexQuote findIexQuoteByTicker(String ticker){
         List<IexQuote> quotes = findIexQuoteByTicker(Arrays.asList(ticker));
         if (quotes == null || quotes.size() != 1) {
             throw new DataRetrievalFailureException("Unable to get data");
