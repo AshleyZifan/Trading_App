@@ -68,4 +68,5 @@ public class TraderDao implements CrudRepository<Trader, Integer> {
         }
         jdbcTemplate.update("delete from " + TABLE_NAME + " where " + ID_COLUMN +" = ?", id);
     }
+
 }

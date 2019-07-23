@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -13,6 +14,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -80,10 +83,26 @@ public class QuoteDao  implements CrudRepository<Quote, String> {
     }
 
     public void update(List<Quote> quotes){
+        String updateSql = "UPDATE quote SET last_price=?, bid_price=?, bid_size=? ask_price=? ask_size=? WHERE ticker=?";
+        List<Object[]> batch = new ArrayList<>();
+        quotes.forEach(quote -> {
+            if(!existsById(quote.getTicker())){
+                throw new ResourceNotFoundException("Ticker not found:" + quote.getTicker());
+            }
+            Object[] values = new Object[]{quote.getLastPrice(),quote.getBidPrice(),quote.getBidSize(),quote.getAskPrice(), quote.getAskSize(), quote.getTicker()};
+            batch.add(values);
+        });
+        int[] rows = jdbcTemplate.batchUpdate(updateSql, batch);
+        int totalRow = Arrays.stream(rows).sum();
+        if(totalRow != quotes.size()){
+            throw new IncorrectResultSizeDataAccessException("Number of rows", quotes.size(), totalRow);
+        }
 
     }
 
     public void update(Quote quote){
-
+        List<Quote> quotes = new ArrayList<>();
+        quotes.add(quote);
+        update(quotes);
     }
 }

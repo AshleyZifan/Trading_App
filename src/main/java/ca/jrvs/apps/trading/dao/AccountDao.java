@@ -48,10 +48,26 @@ public class AccountDao implements CrudRepository<Account, Integer> {
                     .queryForObject("select * from " + TABLE_NAME + " where " + ID_COLUMN +" = ?",
                             BeanPropertyRowMapper.newInstance(Account.class), id);
         } catch (EmptyResultDataAccessException e) {
-            logger.debug("Can't find trader id:" + id, e);
+            logger.debug("Can't find id:" + id, e);
         }
         return account;
     }
+
+    public Account findByTraderId(Integer traderId){
+        if (traderId == null) {
+            throw new IllegalArgumentException("Trader ID can't be null");
+        }
+        Account account = null;
+        try {
+            account = jdbcTemplate
+                    .queryForObject("select * from " + TABLE_NAME + " where trader_id=?",
+                            BeanPropertyRowMapper.newInstance(Account.class), traderId);
+        } catch (EmptyResultDataAccessException e) {
+            logger.debug("Can't find trader id:" + traderId, e);
+        }
+        return account;
+    }
+
 
     @Override
     public boolean existsById(Integer id) {
@@ -65,4 +81,13 @@ public class AccountDao implements CrudRepository<Account, Integer> {
         }
         jdbcTemplate.update("delete from " + TABLE_NAME + " where " + ID_COLUMN +" = ?", id);
     }
+
+    public void updateAmount(Account account){
+        String updateSql = "UPDATE quote SET amount=" + account.getAmount() + "WHERE id=" + account.getId();
+        if(!existsById(account.getId())){
+            throw new ResourceNotFoundException("ID not found:" + account.getId());
+        }
+        jdbcTemplate.update(updateSql);
+    }
+
 }

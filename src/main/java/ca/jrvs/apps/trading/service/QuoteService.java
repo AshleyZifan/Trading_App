@@ -42,14 +42,14 @@ public class QuoteService {
     public void initQuotes(List<String> tickers){
         for(String ticker: tickers){
             if(!quoteDao.existsById(ticker)){
-                quoteDao.update(buildQuoteFromIexQuote((marketDataDao.findIexQuoteByTicker(ticker))));
+                quoteDao.save(buildQuoteFromIexQuote((marketDataDao.findIexQuoteByTicker(ticker))));
             }
         }
     }
 
     public void initQuote(String ticker){
         if(!quoteDao.existsById(ticker)){
-            quoteDao.update(buildQuoteFromIexQuote((marketDataDao.findIexQuoteByTicker(ticker))));
+            quoteDao.save(buildQuoteFromIexQuote((marketDataDao.findIexQuoteByTicker(ticker))));
         }
     }
 
