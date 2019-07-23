@@ -80,6 +80,8 @@ public class OrderService {
     securityOrder.setPrice(price);
     securityOrder.setSize(size);
     securityOrder.setTicker(ticker);
+    securityOrder.setStatus("FILLED");
+    securityOrderDao.save(securityOrder);
     return securityOrder;
 
   }
