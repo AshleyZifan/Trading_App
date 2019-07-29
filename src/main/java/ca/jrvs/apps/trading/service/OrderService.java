@@ -6,7 +6,6 @@ import ca.jrvs.apps.trading.dao.QuoteDao;
 import ca.jrvs.apps.trading.dao.SecurityOrderDao;
 import ca.jrvs.apps.trading.model.domain.*;
 import ca.jrvs.apps.trading.model.dto.MarketOrderDto;
-import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,28 +59,30 @@ public class OrderService {
     Account account = accountDao.findById(orderDto.getAccountId());
     Double balance = account.getAmount();
     Position position = positionDao.findBy_AccountId_Ticker(account.getId(),ticker);
-    //- buy order : check account balance
-    if(size> 0){
-      if (balance < price*size){
-        throw new RuntimeException("balance not enough");
-      }
-    } else {
-      //- sell order: check position for the ticker/symbol
-      if(position.getPosition() < size){
-        throw new RuntimeException("position not enough");
-      }
-    }
-    account.setAmount(balance - price*size);
-    accountDao.updateAmount(account);
-    position.setPosition(position.getPosition() + size);
-    //add position
+
     SecurityOrder securityOrder = new SecurityOrder();
     securityOrder.setAccountId(account.getId());
     securityOrder.setPrice(price);
     securityOrder.setSize(size);
     securityOrder.setTicker(ticker);
-    securityOrder.setStatus("FILLED");
-    securityOrderDao.save(securityOrder);
+    //- buy order : check account balance
+    if(size > 0 && (balance < price*size)){
+      securityOrder.setStatus("CANCELED");
+      securityOrder.setNotes("insufficient fund");
+      securityOrderDao.save(securityOrder);
+    } else if(size < 0 && (position.getPosition() < size)){
+      //- sell order: check position for the ticker/symbol
+      securityOrder.setStatus("CANCELED");
+      securityOrder.setNotes("insufficient position");
+      securityOrderDao.save(securityOrder);
+    } else{
+      account.setAmount(balance - price*size);
+      accountDao.updateAmount(account);
+      position.setPosition(position.getPosition() + size);
+      securityOrder.setStatus("FILLED");
+      securityOrderDao.save(securityOrder);
+    }
+
     return securityOrder;
 
   }

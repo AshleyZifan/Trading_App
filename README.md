@@ -4,27 +4,41 @@
 
 
 
-## Usage
-
-```
-
-```
-
-## Design and Implementation
-
-#### Pseudo code and workflow
-
-```
-
-```
-
-#### Libraries
+## Quick Start
 
 
 
-#### Diagrams
+## REST API Usage
+
+### Swagger
 
 
 
-## Enhancements and Issues
+### Quote Controller
+
+
+
+### Trader Controller
+
+
+
+### Order Controller
+
+
+
+### App Controller
+
+
+
+### Optional
+
+
+
+## Architecture
+
+
+
+
+
+## Improvements
 
