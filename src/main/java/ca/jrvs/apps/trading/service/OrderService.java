@@ -55,32 +55,47 @@ public class OrderService {
     int size = orderDto.getSize();
     String ticker = orderDto.getTicker();
     Quote quote = quoteDao.findById(ticker);
-    double price = quote.getBidPrice();
+    double ask_price = quote.getAskPrice();
+    double bid_price = quote.getBidPrice();
     Account account = accountDao.findById(orderDto.getAccountId());
     Double balance = account.getAmount();
     Position position = positionDao.findBy_AccountId_Ticker(account.getId(),ticker);
 
     SecurityOrder securityOrder = new SecurityOrder();
     securityOrder.setAccountId(account.getId());
-    securityOrder.setPrice(price);
     securityOrder.setSize(size);
     securityOrder.setTicker(ticker);
-    //- buy order : check account balance
-    if(size > 0 && (balance < price*size)){
-      securityOrder.setStatus("CANCELED");
-      securityOrder.setNotes("insufficient fund");
-      securityOrderDao.save(securityOrder);
-    } else if(size < 0 && (position.getPosition() < size)){
+
+    if(size > 0){
+      //- buy order : check account balance
+      securityOrder.setPrice(ask_price);
+      if(balance < ask_price * size){
+        securityOrder.setStatus("CANCELED");
+        securityOrder.setNotes("insufficient fund");
+        securityOrderDao.save(securityOrder);
+      }else{
+        account.setAmount(balance - ask_price*size);
+        accountDao.updateAmount(account);
+        position.setPosition(position.getPosition() + size);
+        securityOrder.setStatus("FILLED");
+        securityOrderDao.save(securityOrder);
+      }
+
+    }else{
       //- sell order: check position for the ticker/symbol
-      securityOrder.setStatus("CANCELED");
-      securityOrder.setNotes("insufficient position");
-      securityOrderDao.save(securityOrder);
-    } else{
-      account.setAmount(balance - price*size);
-      accountDao.updateAmount(account);
-      position.setPosition(position.getPosition() + size);
-      securityOrder.setStatus("FILLED");
-      securityOrderDao.save(securityOrder);
+      securityOrder.setPrice(bid_price);
+      if(position.getPosition() < size){
+        securityOrder.setStatus("CANCELED");
+        securityOrder.setNotes("insufficient position");
+        securityOrderDao.save(securityOrder);
+      }else{
+        account.setAmount(balance + bid_price*size);
+        accountDao.updateAmount(account);
+        position.setPosition(position.getPosition() + size);
+        securityOrder.setStatus("FILLED");
+        securityOrderDao.save(securityOrder);
+      }
+
     }
 
     return securityOrder;

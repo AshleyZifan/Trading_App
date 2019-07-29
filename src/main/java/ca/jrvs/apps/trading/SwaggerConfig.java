@@ -1,3 +1,20 @@
+package ca.jrvs.apps.trading;
+
+import com.google.common.base.Predicates;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.*;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+
+import static springfox.documentation.builders.PathSelectors.any;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -12,12 +29,12 @@ public class SwaggerConfig {
         .build()
         .pathMapping("/")
         .apiInfo(new ApiInfo("Jarvis Trading Rest App", "A Spring Rest API", "v1.0", null,
-            new Contact("Edward Wang", "jrvs.ca", "edward@jrvs.ca"), null, null,
+            new Contact("Zifan Gao", "jrvs.ca", "zifan.gao.jrvs.ca@gmail.com"), null, null,
             new ArrayList<>()));
   }
 
 @Bean
-  UiConfiguration uiConfig() {
+UiConfiguration uiConfig() {
     return UiConfigurationBuilder.builder()
         .deepLinking(true)
         .displayOperationId(false)
