@@ -94,42 +94,29 @@ Endpoints:
 `/trader/withdraw/accountId/{accountId}/amount/{amount}` Withdraw money from account by account id
 
 ### Order Controller
+Order Controller can execute market order. A market order is a buy or sell order to be executed immediately at the current market prices.
 
-Endpoints:
-
-Execute the market order, requires a MarketOrderDto body
-
-```
-/order/marketOrder
-```
+Endpoint:
+`/order/marketOrder` Execute the market order, requires a MarketOrderDto body
 
 ### App Controller
+`/health` Health check, if the Sprintboot app runs successfully, will return "I'm very healthy!"
 
-Health check, if the program runs successfully, will return "I'm very healthy!"
+### Optional(Dashboard Controller)
 
-```
-/health
-```
+`/dashboard/portfolio/traderId/{traderId}` Show portfolio view by trader id
 
-### Optional
-
-Show portfolio view by trader id
-
-```
-/dashboard/portfolio/traderId/{traderId}
-```
-
-show trader account view by trader id
-
-```
-/dashboard/profile/traderId/{traderId}
-```
+`/dashboard/profile/traderId/{traderId}` show trader account view by trader id
 
 ## Architecture
 
 <img src="trading_app.jpg">
 
-
+  - Controller: 
+  - Service: 
+  - Dao: 
+  - SpringBoot: webservlet/TomCat and IoC
+  - PSQL and IEX: 
 
 ## Improvements
 
