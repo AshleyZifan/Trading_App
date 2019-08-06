@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This trading app 
+This trading app using IEX CLOUD API to get market data and allows users to execute market order. 
 
 ## Quick Start
 
@@ -88,7 +88,7 @@ Get all quotes in database
 /quote/dailyList
 ```
 
-Return a Iex Quote which ticker id is the path variable 
+Return a IEX Quote which ticker id is the path variable 
 
 ```
 /quote/iex/ticker/{ticker}
@@ -164,12 +164,12 @@ show trader account view by trader id
 
 ## Improvements
 
-1. Add more controllers.
+1. Improve the security problems: adding sign up and log in functions.
 
-2. Improve the security problem: adding sign up and log in functions and separating users and administrators by groups.
+2. Separating users and administrators accounts by groups, giving them different levels of permissions.
 
 3. Add more available views to show in Dashboard Controller, such as diagrams that can see market data trending.
 
 4. Make the app more user friendly: design our own UI instead of using Swagger.
 
-5. 
+5. For administrators: adding a function to directly enter SQL commands to let administrators get data from database.
