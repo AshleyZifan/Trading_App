@@ -158,7 +158,7 @@ show trader account view by trader id
 
 ## Architecture
 
-
+<img src="trading_app.jpg">
 
 
 
