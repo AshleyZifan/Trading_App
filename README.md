@@ -56,6 +56,7 @@ curl localhost:5000/health
 
 ### Swagger
 The Swagger UI is an open source project to visually render documentation for an API defined with the OpenAPI (Swagger) Specification. We are using Swagger UI because it is simple for this phase of our app.
+
 To verify Swagger UI from your browser
 
 ```
@@ -78,38 +79,23 @@ Endpoints:
 `/quote/iex/ticker/{ticker}` Return a IEX Quote which ticker id is the path variable 
 
 ### Trader Controller
+The Trader Controller can manage trader and account information. It can deposit and withdraw fund from a given account.
 
-Update a trader in the database, requires a Trader body
+Endpoints:
 
-```
-/trader
-```
+`/trader` Update a trader in the database, requires a Trader body
 
-Delete a trader by trader id
+`/trader/traderId/{traderId}` Delete a trader by trader id
 
-```
-/trader/traderId/{traderId}
-```
+`/trader/firstname/{firstname}/lastname/{lastname}/dob/{dob}/country/{country}/email/{email}` Create a new trader account
 
-Create a new trader account
+`/trader/deposit/accountId/{accountId}/amount/{amount}` Deposit money into account by account id
 
-```
-/trader/firstname/{firstname}/lastname/{lastname}/dob/{dob}/country/{country}/email/{email}
-```
-
-Deposit money into account by account id
-
-```
-/trader/deposit/accountId/{accountId}/amount/{amount}
-```
-
-Withdraw money from account by account id
-
-```
-/trader/withdraw/accountId/{accountId}/amount/{amount}
-```
+`/trader/withdraw/accountId/{accountId}/amount/{amount}` Withdraw money from account by account id
 
 ### Order Controller
+
+Endpoints:
 
 Execute the market order, requires a MarketOrderDto body
 
