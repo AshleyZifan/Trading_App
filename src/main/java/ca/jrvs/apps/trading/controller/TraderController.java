@@ -3,7 +3,6 @@ package ca.jrvs.apps.trading.controller;
 import ca.jrvs.apps.trading.dao.AccountDao;
 import ca.jrvs.apps.trading.dao.TraderDao;
 import ca.jrvs.apps.trading.model.domain.Account;
-import ca.jrvs.apps.trading.model.domain.SecurityRow;
 import ca.jrvs.apps.trading.model.domain.Trader;
 import ca.jrvs.apps.trading.service.FundTransferService;
 import org.springframework.beans.factory.annotation.Autowired;

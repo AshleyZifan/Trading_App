@@ -11,6 +11,8 @@ import ca.jrvs.apps.trading.model.view.TraderAccountView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RegisterService {
 
@@ -73,7 +75,7 @@ public class RegisterService {
     Account account = accountDao.findByTraderId(traderId);
     if(account.getAmount()!= 0){
       throw new RuntimeException("The trader has cash balance");
-    }else if(!positionDao.findByAccountId(account.getId()).isEmpty()){
+    }else if(!isZeroPosition(positionDao.findByAccountId(account.getId()))){
       throw new RuntimeException("Has open position");
     }else{
       //- delete all securityOrders
@@ -83,6 +85,20 @@ public class RegisterService {
       // delete all trader
       traderDao.deleteById(traderId);
   }
+  }
+
+  //helper function to check if the position sum is 0 or not
+  public boolean isZeroPosition(List<Position> positions){
+    int sum = 0;
+    for(Position p : positions){
+      sum += p.getPosition();
+    }
+
+    if(sum == 0){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }
