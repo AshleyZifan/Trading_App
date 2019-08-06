@@ -12,8 +12,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Repository;
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

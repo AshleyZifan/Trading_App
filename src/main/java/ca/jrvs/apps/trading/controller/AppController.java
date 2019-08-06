@@ -1,6 +1,5 @@
 package ca.jrvs.apps.trading.controller;
 
-
 import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

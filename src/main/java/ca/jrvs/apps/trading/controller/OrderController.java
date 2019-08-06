@@ -1,10 +1,8 @@
 package ca.jrvs.apps.trading.controller;
 
 import ca.jrvs.apps.trading.model.dto.MarketOrderDto;
-import ca.jrvs.apps.trading.service.FundTransferService;
 import ca.jrvs.apps.trading.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PutMapping;
