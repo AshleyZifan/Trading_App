@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This trading app using IEX CLOUD API to get market data and allows users to execute market order. 
+This application is an online stock trading simulation REST API wich allows users to execute market orders. Front end developers, mobile developers and traders can utilize this trading system. It is a MicroService which is implemented with SpringBoot. It uses IEX CLOUD API to get market data and use JDBC connection to store data into PostgresSQL database.
 
 ## Quick Start
 
@@ -55,7 +55,7 @@ curl localhost:5000/health
 ## REST API Usage
 
 ### Swagger
-
+The Swagger UI is an open source project to visually render documentation for an API defined with the OpenAPI (Swagger) Specification. We are using Swagger UI because it is simple for this phase of our app.
 To verify Swagger UI from your browser
 
 ```
@@ -63,36 +63,19 @@ localhost:5000/swagger-ui.html
 ```
 
 ### Quote Controller
+We get market data (IexQuote) from IEX and cache the quote data in PostgresSQL.
 
-Update a quote in the database, requires a Quote body
+Endpoints:
 
-```
-/quote
-```
+`/quote` Update a quote in the database, requires a Quote body
 
-Update all the market data of existing quotes in database
+`/quote/iexMarketData` Update all the market data of existing quotes in database
 
-```
-/quote/iexMarketData
-```
+`/quote/tickerId/{tickerId}` Create a new quote in database which ticker id is the path variable
 
-Create a new quote in database which ticker id is the path variable
+`/quote/dailyList` List all securities that are available to trading in this trading system.
 
-```
-/quote/tickerId/{tickerId}
-```
-
-Get all quotes in database
-
-```
-/quote/dailyList
-```
-
-Return a IEX Quote which ticker id is the path variable 
-
-```
-/quote/iex/ticker/{ticker}
-```
+`/quote/iex/ticker/{ticker}` Return a IEX Quote which ticker id is the path variable 
 
 ### Trader Controller
 
