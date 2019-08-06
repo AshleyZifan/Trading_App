@@ -77,7 +77,23 @@ public class OrderServiceTest {
   
   @Test
   public void executeMarketOrderSadPath() {
-    //write more tests
+    when(quoteDao.existsById(orderDto.getTicker())).thenReturn(true);
+    when(accountDao.existsById(orderDto.getAccountId())).thenReturn(true);
+    Quote quote = new Quote();
+    quote.setAskSize(10);
+    quote.setAskPrice(100.00);
+    when(quoteDao.findById(orderDto.getTicker())).thenReturn(quote);
+
+    Account account = new Account();
+    account.setAmount(1.00);
+    account.setId(orderDto.getAccountId());
+    //accountDao.findByIdForUpdate equivalents accountDao.findById
+    when(accountDao.findById(orderDto.getAccountId())).thenReturn(account);
+
+    orderService.executeMarketOrder(orderDto);
+    verify(securityOrderDao).save(captorSecurityOrder.capture());
+    SecurityOrder captorOrder = captorSecurityOrder.getValue();
+    assertEquals("CANCELED", captorOrder.getStatus());
     
   }
   
