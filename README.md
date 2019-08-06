@@ -114,10 +114,10 @@ Endpoints:
 
 <img src="trading_app.jpg">
 
-  - Controller: The controller level maps endpoints to applicaiton functions.
+  - Controller: The controller level maps REST API endpoints to applicaiton functions.
   - Service: The service level handles business logics.
   - Dao: Data Access Object level handles specific data operations.
-  - SpringBoot: Spring Boot is a project built on the top of the Spring framework. This project used SpringBoot to set up, configure, and run application.
+  - SpringBoot: This project used SpringBoot to set up, configure, and run application.
   - PSQL and IEX: It uses IEX CLOUD API to get market data and use JDBC connection to store data into PostgresSQL database.
 
 ## Improvements
