@@ -11,6 +11,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.stereotype.Repository;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
+@Repository
 public class MarketDataDao {
 
     private static final String API_BASE_URI = "https://cloud.iexapis.com";

@@ -20,8 +20,8 @@ public class AppConfig {
   private Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
   //you can hard code this for now or use env_var
-  @Value("${iex.host}")
-  private String iex_host;
+  //@Value("${iex.host}")
+  private String iex_host = "https://cloud.iexapis.com/";
 
 /*  @Bean
   public MarketDataConfig marketDataConfig() {

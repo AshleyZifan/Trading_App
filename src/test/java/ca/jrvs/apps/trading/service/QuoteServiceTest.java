@@ -8,6 +8,10 @@ import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.model.domain.Quote;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.junit.Test;
+<<<<<<< HEAD
+=======
+import org.mockito.InjectMocks;
+>>>>>>> 47463fc5f77ccf76ae30037a0a33866674bab202
 import org.mockito.Mock;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ public class QuoteServiceTest {
     @Mock
     private QuoteDao quoteDao;
 
+<<<<<<< HEAD
     AppConfig config;
     HttpClientConnectionManager connectionManager = config.httpClientConnectionManager();
     MarketDataDao marketDataDao = new MarketDataDao(connectionManager);
@@ -34,6 +39,14 @@ public class QuoteServiceTest {
         Quote quote = quoteService.buildQuoteFromIexQuote(iex_quote);
         System.out.println(quote.toString());
     }
+=======
+    @Mock
+    private MarketDataDao marketDataDao;
+
+    @InjectMocks
+    private QuoteService quoteService;
+
+>>>>>>> 47463fc5f77ccf76ae30037a0a33866674bab202
 
     @Test
     public void initQuotes() {

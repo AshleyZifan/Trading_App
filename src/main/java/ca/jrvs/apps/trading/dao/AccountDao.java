@@ -11,8 +11,15 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+
 import javax.sql.DataSource;
 
+
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
+
+@Repository
 public class AccountDao implements CrudRepository<Account, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(AccountDao.class);
 

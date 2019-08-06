@@ -10,7 +10,6 @@ import ca.jrvs.apps.trading.model.domain.Trader;
 import ca.jrvs.apps.trading.model.view.TraderAccountView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -86,6 +85,7 @@ public class RegisterService {
       traderDao.deleteById(traderId);
   }
   }
+
 
   //helper function to check if the position sum is 0 or not
   public boolean isZeroPosition(List<Position> positions){

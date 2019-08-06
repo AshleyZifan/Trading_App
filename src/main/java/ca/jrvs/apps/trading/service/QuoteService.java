@@ -4,15 +4,21 @@ import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.model.domain.Quote;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
+
+@Service
 public class QuoteService {
 
     private QuoteDao quoteDao;
     private MarketDataDao marketDataDao;
 
+
+    @Autowired
     public QuoteService(QuoteDao quoteDao, MarketDataDao marketDataDao){
         this.quoteDao = quoteDao;
         this.marketDataDao = marketDataDao;

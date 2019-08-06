@@ -13,6 +13,11 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
+
+@Repository
 public class SecurityOrderDao implements CrudRepository<SecurityOrder, Integer> {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityOrderDao.class);
