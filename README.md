@@ -96,13 +96,15 @@ Endpoints:
 ### Order Controller
 Order Controller can execute market order. A market order is a buy or sell order to be executed immediately at the current market prices.
 
-Endpoint:
-`/order/marketOrder` Execute the market order, requires a MarketOrderDto body
+Endpoint: `/order/marketOrder` Execute the market order, requires a MarketOrderDto body
 
 ### App Controller
-`/health` Health check, if the Sprintboot app runs successfully, will return "I'm very healthy!"
+Endpoint: `/health` Health check, if the Sprintboot app runs successfully, will return "I'm very healthy!"
 
-### Optional(Dashboard Controller)
+### Optional (Dashboard Controller)
+Dashboard Controller can show different views to users.
+
+Endpoints:
 
 `/dashboard/portfolio/traderId/{traderId}` Show portfolio view by trader id
 
@@ -112,11 +114,11 @@ Endpoint:
 
 <img src="trading_app.jpg">
 
-  - Controller: 
-  - Service: 
-  - Dao: 
-  - SpringBoot: webservlet/TomCat and IoC
-  - PSQL and IEX: 
+  - Controller: The controller level maps endpoints to applicaiton functions.
+  - Service: The service level handles business logics.
+  - Dao: Data Access Object level handles specific data operations.
+  - SpringBoot: Spring Boot is a project built on the top of the Spring framework. This project used SpringBoot to set up, configure, and run application.
+  - PSQL and IEX: It uses IEX CLOUD API to get market data and use JDBC connection to store data into PostgresSQL database.
 
 ## Improvements
 
